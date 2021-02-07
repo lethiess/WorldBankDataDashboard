@@ -3,7 +3,7 @@ from worldbankapp import app
 import json
 import plotly
 from flask import render_template, request, Response, jsonify
-from scripts.data import return_figures
+from .data import return_figures
 
 @app.route("/")
 @app.route("/index")
