@@ -5,8 +5,8 @@ import plotly
 from flask import render_template, request, Response, jsonify
 from .data import return_figures
 
-@app.route("/")
-@app.route("/index")
+@app.route("/", methods=["POST", "GET"])
+@app.route("/index", methods=["POST", "GET"])
 def index():
     """
     
@@ -15,13 +15,21 @@ def index():
     # test list -> replace with full list
     country_codes = [["Canada", "CAN"], ["United States", "USA"], ["Brazil", "BRA"], ["France", "FRA"], ["Germany", "DEU"]]
 
-    # create all figures
-    figures = return_figures()
+    # get countries from filter
+    if (request.method == "POST") and request.form:
+        figures = return_figures(request.form)
+        countries_selected = []
+
+        for country in request.form.lists():
+            countries_selected.append(country[1][0])
+    else:
+        # create all figures
+        figures = return_figures()
     
-    # get country list
-    countries_selected = []
-    for country in country_codes:
-        countries_selected.append(country[1])   
+        # get country list
+        countries_selected = []
+        for country in country_codes:
+            countries_selected.append(country[1])   
 
     ids = ["figure-{}".format(i) for i, _ in enumerate(figures)]
 
