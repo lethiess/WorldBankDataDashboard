@@ -10,7 +10,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-
 </head>
 
 <body>
@@ -62,6 +61,39 @@
             
             <hr>
 
+            <!--filter countries per selection (dropdown menu)-->
+            <div class="dropdown">
+                <button class="btn btn-info btn-lg dropdown-toggle" type="button" 
+                id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" 
+                aria-expanded="false">Filter by country</button>
+                
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="check-boxes">
+                <div class="form-check ml-3">
+                    <!--check the select-all box if all countries were submitted from the form-->
+                    {% if countries_selected | length == 10 %}
+                        <input class="form-check-input" type="checkbox" name="Select All" value="selectall" id="select-all-check" checked>
+                    {% else %}
+                        <input class="form-check-input" type="checkbox" name="Select All" value="selectall" id="select-all-check">
+                    {% endif %}
+                        <label class="form-check-label" for="select-all-check">Select All</label>
+                </div>
+                <form class="px-4 py-3" role="form" method="post" action="/" id="form-filter">
+                    {% for country in all_countries %}
+                        <div class="form-check">
+                            <!-- Check the country filter boxes for all countries submitted from the form -->
+                            {% if country[1] in countries_selected %}
+                                    <input class="form-check-input country-check" type="checkbox" name="{{ country[0] }}" value="{{ country[1] }}" id="defaultCheck1-{{country[1]}}" checked>
+                            {% else %}
+                                    <input class="form-check-input country-check" type="checkbox" name="{{ country[0] }}" value="{{ country[1] }}" id="defaultCheck1-{{country[1]}}">							
+                            {% endif %}
+                                <label class="form-check-label" for="defaultCheck1-{{country[1]}}">{{country[0]}}</label>
+                        </div>
+                    {% endfor %}
+                        <button id="country_selector" type="submit" class="btn btn-primary my-1">Submit</button>
+                </form>
+            </div>
+            </div>
+
             <!--visualization-->
             <div id="charts" class="container mt-3 text-center">
                 
@@ -95,7 +127,7 @@
 
 <footer>
     <script type="text/javascript">
-        
+        // plot all graphs with plotly
         var figures = {{figuresJSON | safe}};
             var ids = {{ids | safe}};
             for (var i in figures) {
@@ -103,6 +135,26 @@
                             figures[i].data,
                             figures[i].layout || {});
             };
+
+        // check the manual selection for countries
+        // #1 - check if the select-all is checked
+        $("#select-all-check").change(function() {
+            $("#check-boxes input:checkbox").prop("checked", $(this).prop("checked"));
+        });
+
+        // #2 - update select-all status 
+        $("#form-filter").change(function() {
+            if (!$(this).prop("checked")) {
+                $("#select-all-check").prop("checked", false);
+            }
+        }); 
+
+        // #3 - update select-all status if all countries are selected
+        $("#form-filter").change(function() {
+            if ($(".country-check:checked").length == $(".form-check").length - 1) {
+                $("#select-all-check").prop("checked", true);
+            }
+        });
     </script>
 </footer>
 
