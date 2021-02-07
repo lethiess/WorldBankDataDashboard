@@ -9,30 +9,33 @@ from .data import return_figures
 @app.route("/index", methods=["POST", "GET"])
 def index():
     """
-    
+        This function defines the behaviour and content of the 
+        index page.
     """
-    
-    # test list -> replace with full list
-    country_codes = [["Canada", "CAN"], ["United States", "USA"], ["Brazil", "BRA"], ["France", "FRA"], ["Germany", "DEU"]]
+    # country list (default)
+    country_codes = [["Canada", "CAN"], ["United States", "USA"], ["Brazil", "BRA"],
+     ["France", "FRA"], ["Germany", "DEU"], ["India", "IND"], ["Italy", "ITA"],
+     ["United Kingdom", "GBR"], ["China", "CHN"], ["Japan", "JPN"], ["Australia", "AUS"],
+     ["Myanmar", "MMR"], ["Netherlands", "NLD"], ["Russia", "RUS"]]
 
-    # get countries from filter
+    # get figures depending on selected countries
     if (request.method == "POST") and request.form:
         figures = return_figures(request.form)
-        countries_selected = []
 
+        countries_selected = []
         for country in request.form.lists():
             countries_selected.append(country[1][0])
     else:
-        # create all figures
         figures = return_figures()
-    
-        # get country list
+
         countries_selected = []
         for country in country_codes:
             countries_selected.append(country[1])   
 
+    # prepare ids for the plot in the html file
     ids = ["figure-{}".format(i) for i, _ in enumerate(figures)]
 
+    # convert plotly figures to JSON format  
     figuresJSON = json.dumps(figures, cls=plotly.utils.PlotlyJSONEncoder)
 
     # render dashboard

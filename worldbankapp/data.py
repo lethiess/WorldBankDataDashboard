@@ -1,5 +1,3 @@
-# data wrangling
-
 import pandas as pd
 import numpy as np
 import plotly.graph_objs as go
@@ -11,11 +9,18 @@ from collections import OrderedDict
 # default list of all countries of interest
 country_default = OrderedDict([('Canada', 'CAN'), ('United States', 'USA'), 
   ('Brazil', 'BRA'), ('France', 'FRA'), ('India', 'IND'), ('Italy', 'ITA'), 
-  ('Germany', 'DEU'), ('United Kingdom', 'GBR'), ('China', 'CHN'), ('Japan', 'JPN')])
+  ('Germany', 'DEU'), ('United Kingdom', 'GBR'), ('China', 'CHN'), ('Japan', 'JPN'),
+  ('Australia', 'AUS'), ('Myanmar', 'MMR'), ('Netherlands', 'NLD'), ('Russia', 'RUS')])
 
 def return_figures(countries=country_default):
     """
+    Create the data visualization plots.
 
+    Parameter:
+    countries: Defines the country of which the data is shown.
+
+    Return:
+    A list of plotly graphs.
 
     """
 
@@ -24,7 +29,7 @@ def return_figures(countries=country_default):
       countries = country_default
 
     # prepare country filter for API request at World Bank Data
-    # format: xx;yy;zz
+    # format: "xx;yy;zz" -> e.g.: "gb;us;id"
     country_filter = list(countries.values())
     country_filter = [x.lower() for x in country_filter]
     country_filter = ";".join(country_filter)
