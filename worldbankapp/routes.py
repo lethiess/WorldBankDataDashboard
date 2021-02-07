@@ -13,7 +13,7 @@ def index():
     """
     
     # test list -> replace with full list
-    country_codes = [["Canada", "CAN"], ["United States", "USA"], ["Brazil", "BRA"], ["France", "FRA"]]
+    country_codes = [["Canada", "CAN"], ["United States", "USA"], ["Brazil", "BRA"], ["France", "FRA"], ["Germany", "DEU"]]
 
     # create all figures
     figures = return_figures()
