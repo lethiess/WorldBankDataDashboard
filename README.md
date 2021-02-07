@@ -27,4 +27,4 @@ Install required packages using pip:
 
 Open a terminal in the project main directory and run ```python woldbank.py ```.
 
-After a successful server startup, open a browser and type in following address: [hhttp://127.0.0.1:3001/](http://127.0.0.1:3001/).
+After a successful server startup, open a browser and type in following address: [http://127.0.0.1:3001/](http://127.0.0.1:3001/).
