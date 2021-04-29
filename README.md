@@ -1,7 +1,7 @@
 # WorldBankDataDashboard
-Simple flask app for data visualization of environment data from (World Bank)[https://www.worldbank.org/]. Via the World Bank API the app feteches the requested directly into the app.  
+Simple flask app for data visualization of environment data from [World Bank](https://www.worldbank.org/). Via the World Bank API the app feteches the requested directly into the app.  
 
-Currently the webapp runs only a local server.
+Currently the web app runs only a local server.
 
 This project is part of Udacity's Data Science Nanodegree.
 
@@ -9,7 +9,7 @@ This project is part of Udacity's Data Science Nanodegree.
 ## Prerequisites
 
 To install the app, you need:
-- python3
+- python 3
 - python packages in the environment.yml or requirements.txt file
  
 Using Anaconda:
@@ -23,7 +23,7 @@ Install required packages using pip:
 ```
 
 
-## Run the webapp
+## Run the web app
 
 Open a terminal in the project main directory and run ```python woldbank.py ```.
 
